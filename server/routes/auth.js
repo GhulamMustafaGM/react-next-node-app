@@ -1,16 +1,13 @@
-const { check } = require('express-validator');
+const express = require('express');
+const router = express.Router();
 
-exports.userRegisterValidator = [
-    check('name')
-        .not()
-        .isEmpty()
-        .withMessage('Name is required'),
-    check('email')
-        .isEmail()
-        .withMessage('Must be a valid email address'),
-    check('password')
-        .isLength({ min: 6 })
-        .withMessage('Password must be at least 6 characters long')
-];
+// import validators
+const { userRegisterValidator } = require('../validators/auth');
+const { runValidation } = require('../validators');
 
+// import from controllers
+const { register } = require('../controllers/auth');
 
+router.post('/register', userRegisterValidator, runValidation, register);
+
+module.exports = router;
