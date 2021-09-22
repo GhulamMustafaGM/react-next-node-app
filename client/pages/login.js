@@ -8,7 +8,7 @@ import { API } from '../config';
 
 const Login = () => {
     const [state, setState] = useState({
-        email: 'ryan@gmail.com',
+        email: 'example@gmail.com',
         password: 'rrrrrr',
         error: '',
         success: '',
