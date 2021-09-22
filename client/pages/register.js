@@ -6,7 +6,7 @@ import { API } from '../config';
 
 const Register = () => {
     const [state, setState] = useState({
-        name: '',
+        name: ' ',
         email: 'example@gmail.com',
         password: 'rrrrrr',
         error: '',
