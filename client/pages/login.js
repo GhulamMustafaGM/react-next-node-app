@@ -9,7 +9,7 @@ import { authenticate, isAuth } from '../helpers/auth';
 
 const Login = () => {
     const [state, setState] = useState({
-        email: 'example@gmail.com',
+        email: 'reactnodeaws@gmail.com',
         password: 'rrrrrr',
         error: '',
         success: '',
