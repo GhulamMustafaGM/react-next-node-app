@@ -9,7 +9,7 @@ import { authenticate, isAuth } from '../helpers/auth';
 
 const Login = () => {
     const [state, setState] = useState({
-        email: 'reactnodeaws@gmail.com',
+        email: 'example@gmail.com',
         password: 'rrrrrr',
         error: '',
         success: '',
@@ -80,6 +80,9 @@ const Login = () => {
                 {success && showSuccessMessage(success)}
                 {error && showErrorMessage(error)}
                 {loginForm()}
+                <Link href="/auth/password/forgot">
+                    <a className="text-danger float-right">Forgot Password</a>
+                </Link>
             </div>
         </Layout>
     );
