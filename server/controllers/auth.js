@@ -12,7 +12,7 @@ AWS.config.update({
     region: process.env.AWS_REGION
 });
 
-const ses = new AWS.SES({ apiVersion: '2010-12-01' });
+const ses = new AWS.SES({ apiVersion: '2012-12-01' });
 
 exports.register = (req, res) => {
     // console.log('REGISTER CONTROLLER', req.body);
