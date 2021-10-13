@@ -1,19 +1,48 @@
-const express = require('express');
-const router = express.Router();
+const mongoose = require('mongoose');
+const { ObjectId } = mongoose.Schema;
 
-// validators
-const { categoryCreateValidator, categoryUpdateValidator } = require('../validators/category');
-const { runValidation } = require('../validators');
+const linkSchema = new mongoose.Schema(
+    {
+        title: {
+            type: String,
+            trim: true,
+            required: true,
+            max: 256
+        },
+        url: {
+            type: String,
+            trim: true,
+            required: true,
+            max: 256
+        },
+        slug: {
+            type: String,
+            lowercase: true,
+            required: true,
+            index: true
+        },
+        postedBy: {
+            type: ObjectId,
+            ref: 'User'
+        },
+        categories: [
+            {
+                type: ObjectId,
+                ref: 'Category',
+                required: true
+            }
+        ],
+        type: {
+            type: String,
+            default: 'Free'
+        },
+        medium: {
+            type: String,
+            default: 'Video'
+        },
+        clicks: { type: Number, default: 0 }
+    },
+    { timestamps: true }
+);
 
-// controllers
-const { requireSignin, adminMiddleware } = require('../controllers/auth');
-const { create, list, read, update, remove } = require('../controllers/category');
-
-// routes
-router.post('/category', categoryCreateValidator, runValidation, requireSignin, adminMiddleware, create);
-router.get('/categories', list);
-router.post('/category/:slug', read);
-router.put('/category/:slug', categoryUpdateValidator, runValidation, requireSignin, adminMiddleware, create);
-router.delete('/category/:slug', requireSignin, adminMiddleware, remove);
-
-module.exports = router;
+module.exports = mongoose.model('Link', linkSchema);
