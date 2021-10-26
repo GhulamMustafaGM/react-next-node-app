@@ -15,7 +15,7 @@ const s3 = new AWS.S3({
 
 exports.create = (req, res) => {
     const { name, image, content } = req.body;
-    console.log({ name, image, content });
+    // console.log({ name, image, content });
     // image data
     const base64Data = new Buffer.from(image.replace(/^data:image\/\w+;base64,/, ''), 'base64');
     const type = image.split(';')[0].split('/')[1];
@@ -100,6 +100,10 @@ exports.update = (req, res) => {
     const { slug } = req.params;
     const { name, image, content } = req.body;
 
+    // image data
+    const base64Data = new Buffer.from(image.replace(/^data:image\/\w+;base64,/, ''), 'base64');
+    const type = image.split(';')[0].split('/')[1];
+
     Category.findOneAndUpdate({ slug }, { name, content }, { new: true }).exec((err, updated) => {
         if (err) {
             return res.status(400).json({
@@ -111,7 +115,7 @@ exports.update = (req, res) => {
             // remove the existing image from s3 before uploading new/updated one
             const deleteParams = {
                 Bucket: 'hackr-kaloraat',
-                Key: `category/${updated.image.key}`
+                Key: `${updated.image.key}`
             };
 
             s3.deleteObject(deleteParams, function(err, data) {
@@ -165,7 +169,7 @@ exports.remove = (req, res) => {
         // remove the existing image from s3 before uploading new/updated one
         const deleteParams = {
             Bucket: 'hackr-kaloraat',
-            Key: `category/${data.image.key}`
+            Key: `${data.image.key}`
         };
 
         s3.deleteObject(deleteParams, function(err, data) {
